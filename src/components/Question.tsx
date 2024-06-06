@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { QuestionType } from "./Quiz";
 
 interface Props {
@@ -7,31 +7,36 @@ interface Props {
 }
 
 const Question: React.FC<Props> = ({ filteredQuestions, onAnswer }) => {
+	const [clickedButtons, setClickedButtons] = useState<{ [key: string]: string | null }>({});
+
+	const handleButtonClick = (question: string, choice: string) => {
+		setClickedButtons(prevState => ({ ...prevState, [question]: choice }));
+		onAnswer(choice);
+	};
+
 	return (
 		<div className="flex flex-wrap -m-4 justify-center">
-			<div className="p-4 md:w-2/3  mt-5">
-				<div className="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
-					<div className="flex justify-center items-center text-center flex-col">
-						
-							{filteredQuestions.map((qu) => (
-								<>
-							<h2 className="text-2xl mb-3">{qu.question}</h2>
-							<div>
-								{(qu.choices).map((choice) => (
-									<button
-										key={choice}
-										className="bg-blue-600 m-2 rounded-md py-1 px-3 text-emerald-50 
-										focus:ring focus:ring-blue-950"
-										onClick={() => onAnswer(choice)}
-									>
-										{choice}
-									</button>
-								))}
+			<div className="p-4 md:w-2/3 mt-5">
+				<div className="flex h-full flex-col">
+					<div className="flex items-start text-start flex-col">
+						{filteredQuestions.map((qu) => (
+							<div key={qu.question} className="bg-gray-100 rounded-lg p-8 mb-5 w-full">
+								<h2 className="text-2xl mb-3">* {qu.question}</h2>
+								<div>
+									{qu.choices.map((choice) => (
+										<button
+											key={choice}
+											className={`m-2 rounded-md py-1 px-3 text-emerald-50 ${
+												clickedButtons[qu.question] === choice ? "bg-blue-900" : "bg-blue-600"
+											}`}
+											onClick={() => handleButtonClick(qu.question, choice)}
+										>
+											{choice}
+										</button>
+									))}
+								</div>
 							</div>
-								</>
-								
-							))}
-						
+						))}
 					</div>
 				</div>
 			</div>
