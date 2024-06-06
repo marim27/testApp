@@ -3,7 +3,7 @@ import Question from "./Question";
 import { Link, useParams } from "react-router-dom";
 
 // Define the QuestionType
-type QuestionType = {
+export type QuestionType = {
 	question: string;
 	choices: string[];
 	answer: string;
@@ -110,14 +110,13 @@ const Quiz: React.FC = () => {
 					{filteredQuestions.length > 0 && currentQuestion < filteredQuestions.length ? (
 						<>
 						<Question
-							question={filteredQuestions[currentQuestion].question}
-							choices={filteredQuestions[currentQuestion].choices}
+						filteredQuestions={filteredQuestions}
 							onAnswer={handleAnswer}
 						/>
-						{currentQuestion==filteredQuestions.length-1&&
+						{/* {currentQuestion-1==filteredQuestions.length-1&& */}
 						<button className="mt-4 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 
 						rounded text-lg" onClick={() => { setIsScore(true) }} >Submit</button>
-						}
+						{/* // } */}
 						</>
 					) : (
 						<p className="text-center">No questions available for this category.</p>
