@@ -79,6 +79,7 @@ const Quiz: React.FC = () => {
 	const [filteredQuestions, setFilteredQuestions] = useState<QuestionType[]>([]);
 	const [currentQuestion, setCurrentQuestion] = useState(0);
 	const [score, setScore] = useState(0);
+	const [submit, setSubmit] = useState(false);
 
 	useEffect(() => {
 		const filtered = questions.filter(q => q.category === category);
@@ -98,6 +99,8 @@ const Quiz: React.FC = () => {
 		const nextQuestion = currentQuestion + 1;
 		if (nextQuestion < filteredQuestions.length) {
 			setCurrentQuestion(nextQuestion);
+		} else {
+			setSubmit(true)
 		}
 	};
 
@@ -109,14 +112,14 @@ const Quiz: React.FC = () => {
 					<h1 className="text-center text-3xl mb-3">Quiz {category}</h1>
 					{filteredQuestions.length > 0 && currentQuestion < filteredQuestions.length ? (
 						<>
-						<Question
-						filteredQuestions={filteredQuestions}
-							onAnswer={handleAnswer}
-						/>
-						{/* {currentQuestion-1==filteredQuestions.length-1&& */}
-						<button className="mt-4 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 
+							<Question
+								filteredQuestions={filteredQuestions}
+								onAnswer={handleAnswer}
+							/>
+							{submit &&
+								<button className="mt-4 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 
 						rounded text-lg" onClick={() => { setIsScore(true) }} >Submit</button>
-						{/* // } */}
+							}
 						</>
 					) : (
 						<p className="text-center">No questions available for this category.</p>
