@@ -98,14 +98,7 @@ const Quiz: React.FC = () => {
 		const nextQuestion = currentQuestion + 1;
 		if (nextQuestion < filteredQuestions.length) {
 			setCurrentQuestion(nextQuestion);
-		} else {
-			setIsScore(true)
 		}
-	};
-	const retakeExam = () => {
-		setIsScore(false)
-		setCurrentQuestion(0);
-		setScore(0);
 	};
 
 	return (
@@ -115,11 +108,17 @@ const Quiz: React.FC = () => {
 				<>
 					<h1 className="text-center text-3xl mb-3">Quiz {category}</h1>
 					{filteredQuestions.length > 0 && currentQuestion < filteredQuestions.length ? (
+						<>
 						<Question
 							question={filteredQuestions[currentQuestion].question}
 							choices={filteredQuestions[currentQuestion].choices}
 							onAnswer={handleAnswer}
 						/>
+						{currentQuestion==filteredQuestions.length-1&&
+						<button className="mt-4 inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 
+						rounded text-lg" onClick={() => { setIsScore(true) }} >Submit</button>
+						}
+						</>
 					) : (
 						<p className="text-center">No questions available for this category.</p>
 					)}
@@ -130,9 +129,6 @@ const Quiz: React.FC = () => {
 					<h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Score of {category} Exam</h1>
 					<h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">{score} / {filteredQuestions.length}</h1>
 					<div className="flex justify-center mt-5">
-						<button className="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 
-						rounded text-lg" onClick={() => { retakeExam() }} >Retake Exam
-						</button>
 						<Link className="ml-4 inline-flex text-gray-700 bg-gray-200 border-0 py-2 px-6 focus:outline-none hover:bg-gray-300 
 						rounded text-lg" to="/">Go To Home</Link>
 					</div>
