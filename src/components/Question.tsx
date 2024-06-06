@@ -17,7 +17,8 @@ const Question: React.FC<Props> = ({ question, choices, onAnswer }) => {
 							{choices.map((choice) => (
 								<button
 									key={choice}
-									className="bg-blue-600 m-2 rounded-md py-1 px-3 text-emerald-50"
+									className="bg-blue-600 m-2 rounded-md py-1 px-3 text-emerald-50 
+									focus:ring focus:ring-blue-950"
 									onClick={() => onAnswer(choice)}
 								>
 									{choice}
